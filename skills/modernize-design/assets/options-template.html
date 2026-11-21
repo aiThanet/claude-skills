@@ -1,0 +1,189 @@
+<!doctype html>
+<!-- modernize-design options template.
+     Replace TARGET, the option texts and the sample rows. Keep: option tabs, theme + phone toggles, trade-offs, pick box.
+     Swap the :root tokens for the project's own tokens when it has them. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TARGET — design options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0F1A2A; --ink-2:#4E5B6E; --bg:#E9EDF2; --paper:#FFFFFF; --line:#CFD7E2; --zebra:#F5F7FA;
+  --blue:#1556C9; --blue-wash:#E3ECFB; --accent:#C2410C;
+  --ok:#127A3E; --ok-wash:#DDF3E5; --warn:#9A5B00; --warn-wash:#FFF0D6; --bad:#B42318; --bad-wash:#FDE3E0;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --ink:#E7EDF5; --ink-2:#9FAEC2; --bg:#0D131C; --paper:#162130; --line:#2A384B; --zebra:#1A2636;
+  --blue:#7FA8F5; --blue-wash:#1D2C48; --accent:#FB8A4C;
+  --ok:#5BD28B; --ok-wash:#123323; --warn:#F4B54C; --warn-wash:#3A2A0E; --bad:#FF8B7E; --bad-wash:#3D1714;}}
+:root[data-theme="dark"]{
+  --ink:#E7EDF5; --ink-2:#9FAEC2; --bg:#0D131C; --paper:#162130; --line:#2A384B; --zebra:#1A2636;
+  --blue:#7FA8F5; --blue-wash:#1D2C48; --accent:#FB8A4C;
+  --ok:#5BD28B; --ok-wash:#123323; --warn:#F4B54C; --warn-wash:#3A2A0E; --bad:#FF8B7E; --bad-wash:#3D1714;}
+
+*{box-sizing:border-box}
+html{font-size:17px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Anuphan",system-ui,sans-serif;line-height:1.55;font-variant-numeric:tabular-nums}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+h1{font-size:1.7rem;margin:0}
+h2{font-size:1.2rem;margin:0 0 4px}
+p{margin:0}
+.muted{color:var(--ink-2)}
+
+/* ── chooser chrome (not part of any option) ── */
+.bar{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:12px 20px;background:var(--paper);border-bottom:1px solid var(--line)}
+.bar .sp{flex:1}
+.seg{display:flex;gap:4px;border:2px solid var(--line);border-radius:10px;padding:3px}
+.seg button{border:0;background:none;min-height:40px;padding:0 14px;border-radius:7px}
+.seg button[aria-pressed=true]{background:var(--blue);color:var(--paper);font-weight:600}
+.wrap{max-width:1400px;margin:0 auto;padding:24px 20px 64px;display:flex;flex-direction:column;gap:20px}
+.about{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+.pros{margin:8px 0 0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:4px}
+.rec{display:inline-block;margin-left:8px;padding:2px 10px;border-radius:999px;background:var(--ok-wash);color:var(--ok);font-size:.85rem;font-weight:600;vertical-align:middle}
+.stage{margin:0 auto;width:100%;transition:max-width .2s}
+body.phone .stage{max-width:390px}
+.pick{border:2px dashed var(--blue)}
+
+/* ── shared mock pieces ── */
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+.head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:16px}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:0 18px;border-radius:10px;border:2px solid var(--blue);background:var(--paper);color:var(--blue);font-weight:600}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+.filters input,.filters select{min-height:46px;border:2px solid var(--line);border-radius:8px;padding:0 12px;background:var(--paper)}
+.filters input{flex:1;min-width:200px}
+.num{text-align:right}
+/* status: colour + word + shape */
+.st{display:inline-flex;align-items:center;gap:6px;font-weight:600;white-space:nowrap}
+.st::before{content:"";width:11px;height:11px;border-radius:50%;background:currentColor}
+.st.ok{color:var(--ok)} .st.warn{color:var(--warn)} .st.warn::before{border-radius:2px}
+.st.bad{color:var(--bad)} .st.bad::before{border-radius:0;clip-path:polygon(50% 0,100% 100%,0 100%)}
+
+/* option A: table */
+.tbl{overflow:auto;border:1px solid var(--line);border-radius:12px;background:var(--paper)}
+.tbl table{width:100%;border-collapse:collapse}
+.tbl th{text-align:left;padding:12px 16px;color:var(--ink-2);font-weight:600;border-bottom:2px solid var(--line);white-space:nowrap}
+.tbl td{padding:14px 16px;border-bottom:1px solid var(--line)}
+.tbl tbody tr:nth-child(even) td{background:var(--zebra)}
+.tbl tbody tr:hover td{background:var(--blue-wash)}
+.tbl small{display:block;color:var(--ink-2)}
+/* option B: cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.grid .panel{display:flex;flex-direction:column;gap:8px}
+.grid .row{display:flex;justify-content:space-between;gap:8px}
+.big{font-size:1.3rem;font-weight:700}
+/* option C: split */
+.split{display:grid;grid-template-columns:340px 1fr;gap:16px}
+.list{display:flex;flex-direction:column;gap:6px}
+.list button{display:flex;justify-content:space-between;gap:8px;text-align:left;min-height:56px;padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:var(--paper)}
+.list button[aria-current=true]{border-color:var(--blue);background:var(--blue-wash)}
+dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px 24px;margin:12px 0 0}
+dt{color:var(--ink-2);font-size:.9rem} dd{margin:0;font-weight:600}
+
+/* phone: real media query + forced phone toggle */
+@media (max-width:700px){.about{grid-template-columns:1fr}.split{grid-template-columns:1fr}.tbl .opt{display:none}}
+body.phone .about,body.phone .split{grid-template-columns:1fr}
+body.phone .tbl .opt{display:none}
+</style>
+</head>
+<body>
+<div class="bar">
+  <strong>TARGET — pick a design</strong>
+  <div class="seg" role="group" aria-label="Option">
+    <button data-opt="a" aria-pressed="true">A · Table</button><button data-opt="b" aria-pressed="false">B · Cards</button><button data-opt="c" aria-pressed="false">C · Split view</button>
+  </div>
+  <span class="sp"></span>
+  <div class="seg" role="group" aria-label="Width"><button id="w-desk" aria-pressed="true">Desktop</button><button id="w-phone" aria-pressed="false">Phone 390</button></div>
+  <div class="seg" role="group" aria-label="Theme"><button id="t-light" aria-pressed="true">Light</button><button id="t-dark" aria-pressed="false">Dark</button></div>
+</div>
+
+<div class="wrap">
+  <!-- ───── per-option explanation ───── -->
+  <div class="about" data-about="a">
+    <div class="card"><h2>A · Table <span class="rec">Recommended</span></h2><p class="muted">Best for: scanning and comparing many rows on desktop.</p></div>
+    <div class="card"><ul class="pros"><li>✅ Densest, familiar</li><li>✅ Sort and compare columns</li><li>⚠️ Phone hides secondary columns</li></ul></div>
+  </div>
+  <div class="about" data-about="b" hidden>
+    <div class="card"><h2>B · Cards</h2><p class="muted">Best for: phone use and few rows with one key number each.</p></div>
+    <div class="card"><ul class="pros"><li>✅ Great on phones</li><li>✅ Status stands out</li><li>⚠️ Fewer rows per screen, hard to compare</li></ul></div>
+  </div>
+  <div class="about" data-about="c" hidden>
+    <div class="card"><h2>C · Split view</h2><p class="muted">Best for: working through items one at a time with lots of detail.</p></div>
+    <div class="card"><ul class="pros"><li>✅ Detail without leaving the list</li><li>✅ No dialogs</li><li>⚠️ Needs wide screen; on phone becomes list → detail</li></ul></div>
+  </div>
+
+  <div class="stage">
+    <div class="head">
+      <div><p class="muted">Section / TARGET</p><h1>TARGET</h1></div>
+      <button class="btn primary">+ New item</button>
+    </div>
+    <div class="filters"><input type="search" placeholder="Search code or name" aria-label="Search"><select aria-label="Status"><option>All statuses</option></select></div>
+
+    <!-- A -->
+    <section data-view="a" class="tbl">
+      <table>
+        <thead><tr><th>Item</th><th class="opt">Date</th><th>Status</th><th class="num">Amount</th><th class="opt"><span hidden>Actions</span></th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </section>
+    <!-- B -->
+    <section data-view="b" class="grid" id="cards" hidden></section>
+    <!-- C -->
+    <section data-view="c" class="split" hidden>
+      <div class="list" id="list"></div>
+      <div class="panel" id="detail"></div>
+    </section>
+  </div>
+
+  <div class="card pick"><h2>Your pick</h2><p>Reply with <b>A</b>, <b>B</b> or <b>C</b>, or a mix (e.g. "B's cards with A's filters"). No code changes until you choose.</p></div>
+</div>
+
+<script>
+// Sample data: same shape as the real data, made-up values.
+const DATA = [
+  { code:"SO-1042", name:"Sample item one", date:"21/11", amount:12500, st:["ok","Done"] },
+  { code:"SO-1043", name:"Sample item with a longer name", date:"21/11", amount:3480, st:["warn","Waiting"] },
+  { code:"SO-1044", name:"Sample item three", date:"20/11", amount:980, st:["bad","Problem"] },
+  { code:"SO-1045", name:"Sample item four", date:"20/11", amount:56000, st:["ok","Done"] },
+];
+const f = n => n.toLocaleString("en-US");
+const st = s => `<span class="st ${s[0]}">${s[1]}</span>`;
+document.getElementById("rows").innerHTML = DATA.map(d =>
+  `<tr><td><b>${d.code}</b><small>${d.name}</small></td><td class="opt">${d.date}</td><td>${st(d.st)}</td><td class="num">${f(d.amount)}</td><td class="opt"><button class="btn">Open</button></td></tr>`).join("");
+document.getElementById("cards").innerHTML = DATA.map(d =>
+  `<article class="panel"><div class="row"><b>${d.code}</b>${st(d.st)}</div><p class="muted">${d.name}</p><div class="row"><span class="muted">${d.date}</span><span class="big">${f(d.amount)}</span></div></article>`).join("");
+const list = document.getElementById("list"), detail = document.getElementById("detail");
+const show = i => {
+  const d = DATA[i];
+  [...list.children].forEach((b, j) => b.setAttribute("aria-current", j === i));
+  detail.innerHTML = `<div class="row" style="display:flex;justify-content:space-between;gap:8px"><h2>${d.code}</h2>${st(d.st)}</div><p class="muted">${d.name}</p>
+    <dl><div><dt>Date</dt><dd>${d.date}</dd></div><div><dt>Amount</dt><dd>${f(d.amount)}</dd></div></dl>
+    <div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap"><button class="btn">Edit</button><button class="btn">Print</button></div>`;
+};
+list.innerHTML = DATA.map((d, i) => `<button data-i="${i}"><span><b>${d.code}</b><br><small class="muted">${d.name}</small></span>${st(d.st)}</button>`).join("");
+list.onclick = e => { const b = e.target.closest("button"); if (b) show(+b.dataset.i); };
+show(0);
+
+// chooser chrome
+const press = (on, off) => { on.setAttribute("aria-pressed", true); off.forEach(b => b.setAttribute("aria-pressed", false)); };
+document.querySelectorAll("[data-opt]").forEach(b => b.onclick = () => {
+  press(b, [...document.querySelectorAll("[data-opt]")].filter(x => x !== b));
+  document.querySelectorAll("[data-view]").forEach(s => s.hidden = s.dataset.view !== b.dataset.opt);
+  document.querySelectorAll("[data-about]").forEach(s => s.hidden = s.dataset.about !== b.dataset.opt);
+});
+const wd = document.getElementById("w-desk"), wp = document.getElementById("w-phone");
+wd.onclick = () => { press(wd, [wp]); document.body.classList.remove("phone"); };
+wp.onclick = () => { press(wp, [wd]); document.body.classList.add("phone"); };
+const tl = document.getElementById("t-light"), tdk = document.getElementById("t-dark");
+tl.onclick = () => { press(tl, [tdk]); document.documentElement.dataset.theme = "light"; };
+tdk.onclick = () => { press(tdk, [tl]); document.documentElement.dataset.theme = "dark"; };
+if (matchMedia("(prefers-color-scheme: dark)").matches) press(tdk, [tl]);
+</script>
+</body>
+</html>
