@@ -33,7 +33,7 @@ Copy `assets/options-template.html` → `design/<target>-options.html` in the pr
 - The file must work at desktop width and at ~390px (phone toggle), in light and dark. It must be a single file with no build step. Fonts may come from Google Fonts, and nothing else external.
 
 ### 4. Show and STOP
-- Open it for the user. Publish it as an Artifact if available, otherwise give the absolute path.
+- **Only write the local HTML file.** Never publish it as an Artifact or upload it anywhere. Give the user its absolute path so they can open it in a browser.
 - Ask which option they want with `AskUserQuestion`: A / B / C, plus room for "mix: A's table + B's filter".
 - **Do not edit any source file until they answer.** If they want changes, update the same HTML file and ask again.
 
