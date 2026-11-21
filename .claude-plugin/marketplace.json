@@ -1,0 +1,14 @@
+{
+  "name": "aithanet-skills",
+  "owner": { "name": "aiThanet" },
+  "metadata": { "description": "Personal Claude Code skills", "version": "1.0.0" },
+  "plugins": [
+    {
+      "name": "modernize-design",
+      "description": "Redesign a component/page: shows one HTML file with 2-3 design options, waits for your pick, then implements it.",
+      "source": "./",
+      "strict": false,
+      "skills": ["./skills/modernize-design"]
+    }
+  ]
+}

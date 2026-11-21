@@ -8,9 +8,42 @@ Personal [Claude Code](https://claude.com/claude-code) skills.
 
 ## Install
 
-```bash
-git clone https://github.com/aiThanet/claude-skills
-cp -r claude-skills/skills/modernize-design ~/.claude/skills/
+### Option 1 — Claude Code plugin (easiest, auto-updates)
+
+Inside Claude Code:
+
+```
+/plugin marketplace add aiThanet/claude-skills
+/plugin install modernize-design@aithanet-skills
 ```
 
-Then ask Claude "modernize the X page" or run `/modernize-design`.
+Restart Claude Code. Update later with `/plugin marketplace update aithanet-skills`.
+
+### Option 2 — Copy the skill folder
+
+macOS / Linux / Git Bash:
+
+```bash
+git clone --depth 1 https://github.com/aiThanet/claude-skills /tmp/claude-skills \
+  && mkdir -p ~/.claude/skills \
+  && cp -r /tmp/claude-skills/skills/modernize-design ~/.claude/skills/
+```
+
+Windows PowerShell:
+
+```powershell
+git clone --depth 1 https://github.com/aiThanet/claude-skills "$env:TEMP\claude-skills"
+Copy-Item -Recurse "$env:TEMP\claude-skills\skills\modernize-design" "$HOME\.claude\skills\"
+```
+
+Use `.claude/skills/` inside a project instead of `~/.claude/skills/` to install for that project only.
+
+### Option 3 — Ask Claude
+
+Paste into Claude Code:
+
+> Install the modernize-design skill from https://github.com/aiThanet/claude-skills into ~/.claude/skills
+
+## Use
+
+Ask "modernize the orders page", or run `/modernize-design` (plugin install: `/modernize-design:modernize-design`).
