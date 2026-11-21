@@ -29,6 +29,7 @@ Copy `assets/options-template.html` → `design/<target>-options.html` in the pr
 - Fill with **realistic sample content shaped like the real data** (same columns, same lengths, Thai text if the app is Thai). Make up the values. Never paste real customer names, prices or IDs.
 - Each option gets: a name, one line on what it is best for, a ✅ / ⚠️ trade-off list, and the mock itself.
 - Mark one as **Recommended** and say why in one line.
+- **Every option includes its phone version.** Design the phone layout on purpose, following §Mobile rules; don't just let the desktop layout shrink. If an option works badly on phones, say so in its ⚠️ list.
 - The file must work at desktop width and at ~390px (phone toggle), in light and dark. It must be a single file with no build step. Fonts may come from Google Fonts, and nothing else external.
 
 ### 4. Show and STOP
@@ -41,7 +42,8 @@ Copy `assets/options-template.html` → `design/<target>-options.html` in the pr
 - Keep changes small: restyle and restructure the target only, and leave logic, API calls, routes and permissions alone.
 - Don't add wrapper components that only pass props through. Use the library's defaults instead.
 - Go through the feature inventory from step 1 and tick every item.
-- Verify at desktop and ~390px, in light and dark. Run the project's build and typecheck.
+- Build the phone layout at the same time as the desktop one, not afterwards.
+- Verify at desktop and ~390px, in light and dark. At 390px check: buttons are full width, spacing is compact, nothing touches, and nothing scrolls sideways. Run the project's build and typecheck.
 
 ## Design rules (every option must follow)
 - Text ≥ 16px (≥ 18px if users are older), secondary text ≥ 14px, contrast ≥ 4.5:1.
@@ -51,7 +53,26 @@ Copy `assets/options-template.html` → `design/<target>-options.html` in the pr
 - Numbers: right-aligned, `tabular-nums`.
 - No element touches its neighbour. Use a gap scale (4/8/12/16/24).
 - Empty states tell the user what to do next.
-- Phones: compact, not just narrower. Hide secondary columns, stack rows, and never scroll the page sideways.
+## Mobile rules (≤600px, always apply)
+Phones get a **compact** layout, not a narrower copy of the desktop one. Shrink everything: heights, gaps, margins and padding.
+
+| Thing | Desktop | Phone |
+| ----- | ------- | ----- |
+| Buttons | auto width, 44–52px tall | **full width** (`width:100%`), 40px tall; stack button groups vertically with an 8px gap |
+| Inputs / selects | 44–52px | full width, 40px |
+| Gap between siblings | 8–16px | 4–8px |
+| Section spacing | 16–24px | 8–12px |
+| Card / dialog padding | 18–24px | 8–12px |
+| Page side padding | 20–32px | 8–12px |
+| Table cells | 14–16px padding | 6–8px padding, or turn rows into stacked cards |
+| Headings | 1.7rem | 1.3rem |
+
+- Tap targets stay ≥ 36px tall, with ≥ 4px between them, even when compact.
+- Put the main action where a thumb reaches it: the full-width primary button goes at the top of the content or in a bar fixed to the bottom.
+- Tables: hide secondary columns, or switch to one card per row. Never scroll the page sideways.
+- Filters: stack them full width, or put them behind a "Filters" button. Don't let them wrap into ragged rows.
+- Dialogs: open full screen, or as a bottom sheet.
+- Use the project's own phone rules if it has them, e.g. a `_mobile.scss` that halves spacing utilities. Don't hand-write new breakpoints when those rules already cover it.
 
 ## Defaults (when the project has no design system)
 These are the tokens in `assets/options-template.html`: grey-blue neutrals, one blue for focus and active states, one orange accent for the main action, green/amber/red status colours with soft background tints, 12px panel radius, 10px control radius, and a `prefers-color-scheme` dark set.

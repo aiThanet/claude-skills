@@ -86,10 +86,33 @@ body.phone .stage{max-width:390px}
 dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px 24px;margin:12px 0 0}
 dt{color:var(--ink-2);font-size:.9rem} dd{margin:0;font-weight:600}
 
-/* phone: real media query + forced phone toggle */
-@media (max-width:700px){.about{grid-template-columns:1fr}.split{grid-template-columns:1fr}.tbl .opt{display:none}}
+/* phone: compact — full-width buttons, smaller heights, gaps, margins, padding.
+   Same rules twice: real media query (actual phones) + body.phone (the 390 toggle). */
+@media (max-width:600px){
+  .about,.split{grid-template-columns:1fr}
+  .tbl .opt{display:none}
+  .wrap{padding:12px 8px 40px;gap:10px}
+  h1{font-size:1.3rem}
+  .card,.panel{padding:10px 12px}
+  .head{flex-direction:column;align-items:stretch;gap:8px;margin-bottom:10px}
+  .btn{width:100%;justify-content:center;min-height:40px;padding:0 12px}
+  .filters{flex-direction:column;gap:6px;margin-bottom:10px}
+  .filters input,.filters select{width:100%;min-height:40px;min-width:0}
+  .tbl th,.tbl td{padding:8px}
+  .grid,.list{gap:6px}
+  .list button{min-height:44px;padding:8px 10px}
+}
 body.phone .about,body.phone .split{grid-template-columns:1fr}
 body.phone .tbl .opt{display:none}
+body.phone .stage h1{font-size:1.3rem}
+body.phone .stage .panel{padding:10px 12px}
+body.phone .stage .head{flex-direction:column;align-items:stretch;gap:8px;margin-bottom:10px}
+body.phone .stage .btn{width:100%;justify-content:center;min-height:40px;padding:0 12px}
+body.phone .stage .filters{flex-direction:column;gap:6px;margin-bottom:10px}
+body.phone .stage .filters input,body.phone .stage .filters select{width:100%;min-height:40px;min-width:0}
+body.phone .stage .tbl th,body.phone .stage .tbl td{padding:8px}
+body.phone .stage .grid,body.phone .stage .list{gap:6px}
+body.phone .stage .list button{min-height:44px;padding:8px 10px}
 </style>
 </head>
 <body>
