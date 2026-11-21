@@ -10,14 +10,21 @@ Personal [Claude Code](https://claude.com/claude-code) skills.
 
 ### Option 1 — Claude Code plugin (easiest, auto-updates)
 
-Inside Claude Code:
+From a terminal:
+
+```bash
+claude plugin marketplace add aiThanet/claude-skills
+claude plugin install modernize-design@aithanet-skills
+```
+
+Or inside Claude Code:
 
 ```
 /plugin marketplace add aiThanet/claude-skills
 /plugin install modernize-design@aithanet-skills
 ```
 
-Restart Claude Code. Update later with `/plugin marketplace update aithanet-skills`.
+Restart Claude Code. Update later with `claude plugin marketplace update aithanet-skills` (or `/plugin marketplace update aithanet-skills`).
 
 ### Option 2 — Copy the skill folder
 
